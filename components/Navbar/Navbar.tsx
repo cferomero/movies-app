@@ -6,7 +6,7 @@ import { SidebarRoutes } from '../SidebarRoutes/SidebarRoutes'
 
 export function Navbar () {
     return (
-        <div className="flex items-center px-2 gap-x-4 md:px-6 justify-between w-full bg-background border-b h-20">
+        <nav className="flex items-center px-2 gap-x-4 md:px-6 justify-between w-full bg-background border-b h-20">
             <div className="block md:hidden">
                 <Sheet>
                     <SheetTrigger className='flex items-center'>
@@ -24,6 +24,6 @@ export function Navbar () {
             <div className="flex gap-x-2 items-center">
                 <Bell />
             </div>
-        </div>
+        </nav>
     )
 }

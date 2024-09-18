@@ -15,11 +15,11 @@ export default function Home() {
 
   return (
     <div>
-      <div className='w-full h-[70vh]' >
+      <main className='w-full h-[70vh]' >
         <BannerFilms
           endpoint="trending/movie/week?language=en-US"
         />
-      </div>
+      </main>
       <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
         <h5 className={`text-3xl ${antonFont.className}`}>Top  rated</h5>
         <CardFilm 
