@@ -31,6 +31,9 @@ const useApi = (endpoint: string, limite?: number) => {
                             id: movie.id,
                             title: movie.title,
                             overview: movie.overview,
+                            genres: movie.genres,
+                            runtime: movie.runtime,
+                            vote_average: movie.vote_average,
                             imagen: movie.poster_path
                             ? `${IMAGE_PATH}${movie.poster_path}`
                             : '/default-image.jpg',

@@ -21,7 +21,7 @@ export function SidebarRoutes() {
                 </div>
                 <Separator />
                 <div className="p-2 md:p-6">
-                    <p className={`${firaSans.className} text-slate-400 mb-2`}> LIBRERÍA </p>
+                    <p className={`${firaSans.className} text-slate-400 mb-2`}> BIBLIOTECA </p>
                     { dataLibrarySidebar.map((item) => (
                         <SidebarItems key={item.label} item={item}/>
                     ))}

@@ -2,7 +2,7 @@
 
 import useApi from "@/app/hooks/useApi"
 import { Ubuntu } from 'next/font/google'
-import { MoveRight } from "lucide-react"
+// import { MoveRight } from "lucide-react"
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useEffect, useState } from "react"
@@ -35,7 +35,7 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
 
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-5 items-center mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-center mt-5">
             {isLoading || showSkeleton ? (
                 [...Array(limite)].map((_, index) => (
                     <Skeleton key={index} className="w-full h-72" />
@@ -66,9 +66,9 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
                             </div>
                         </div>
                     ))}
-                    <a href="#" className="border-2 border-[#b9b9b9] bg-[#cecccc] w-[80px] h-[80px] rounded-full ml-10 flex items-center justify-center font-black hover:scale-150 transition-all" title="See all">
+                    {/* <a href="#" className="border-2 border-[#b9b9b9] bg-[#cecccc] w-[80px] h-[80px] rounded-full ml-10 flex items-center justify-center font-black hover:scale-150 transition-all" title="See all">
                         <MoveRight />
-                    </a>
+                    </a> */}
                 </>
             ) : (
                 null

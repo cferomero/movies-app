@@ -3,6 +3,7 @@
 import { CardFilm } from "./components/CardFilm";
 import { BannerFilms } from "./components/BannerFilms";
 
+
 import { Anton } from "next/font/google";
 
 // ****Fonts
@@ -21,24 +22,24 @@ export default function Home() {
         />
       </main>
       <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
-        <h5 className={`text-3xl ${antonFont.className}`}>Top  rated</h5>
+        <h5 className={`text-3xl ${antonFont.className}`}>Top  rated movies</h5>
         <CardFilm 
           endpoint="movie/top_rated?language=en-US"
-          limite={6}
+          limite={5}
         />
       </div>
       <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
-        <h5 className={`text-3xl ${antonFont.className}`}>Popular</h5>
+        <h5 className={`text-3xl ${antonFont.className}`}>Popular movies</h5>
           <CardFilm
             endpoint="movie/popular?language=en-US" 
-            limite={6}
+            limite={5}
           />
       </div>
       <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
-        <h5 className={`text-3xl ${antonFont.className}`}>Próximamente</h5>
+        <h5 className={`text-3xl ${antonFont.className}`}>Coming soon movies</h5>
           <CardFilm
             endpoint="movie/upcoming?language=en-US" 
-            limite={6}
+            limite={5}
           />
       </div>
     </div>
