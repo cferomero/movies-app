@@ -1,6 +1,7 @@
 "use client"
 
 import { CardFilm } from "./components/CardFilm";
+import { CardSerie } from "./components/CardSerie";
 import { BannerFilms } from "./components/BannerFilms";
 
 
@@ -36,9 +37,30 @@ export default function Home() {
           />
       </div>
       <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
-        <h5 className={`text-3xl ${antonFont.className}`}>Coming soon movies</h5>
+        <h5 className={`text-3xl ${antonFont.className}`}>Upcoming movies</h5>
           <CardFilm
             endpoint="movie/upcoming?language=en-US" 
+            limite={5}
+          />
+      </div>
+      <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
+        <h5 className={`text-3xl ${antonFont.className}`}>Popular Tv series</h5>
+          <CardSerie 
+            endpoint="tv/popular?language=en-US"
+            limite={5}
+          />
+      </div>
+      <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
+        <h5 className={`text-3xl ${antonFont.className}`}>Top rated Tv series</h5>
+          <CardSerie
+            endpoint="tv/top_rated?language=en-US" 
+            limite={5}
+          />
+      </div>
+      <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
+        <h5 className={`text-3xl ${antonFont.className}`}>On air Tv series</h5>
+          <CardSerie 
+            endpoint="tv/on_the_air?language=en-US"
             limite={5}
           />
       </div>

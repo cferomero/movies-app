@@ -37,6 +37,9 @@ const useApi = (endpoint: string, limite?: number) => {
                             imagen: movie.poster_path
                             ? `${IMAGE_PATH}${movie.poster_path}`
                             : '/default-image.jpg',
+                            backdrop: movie.backdrop_path
+                            ? `${IMAGE_PATH}${movie.backdrop_path}`
+                            : '/default-image.jpg',
                         })));
                 }
             } catch (error: any) {
