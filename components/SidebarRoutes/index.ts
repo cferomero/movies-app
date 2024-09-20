@@ -1,1 +1,2 @@
-import * from './SidebarRoutes'
+import * as SidebarRoutes from './SidebarRoutes';
+export { SidebarRoutes };
