@@ -1,24 +1,31 @@
 "use client"
 
-import useApi from "@/app/hooks/useApi"
-import { Ubuntu } from 'next/font/google'
-// import { MoveRight } from "lucide-react"
-import Link from "next/link"
-import { Skeleton } from "@/components/ui/skeleton"
-import { useEffect, useState } from "react"
+import useApi from "@/app/hooks/useApi";
+import { Ubuntu } from 'next/font/google';
+import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 // ***FONTS
 const ubuntu = Ubuntu({ subsets: ['latin'], weight: ['400'] });
 
+// Interfaces de la pelicula
+interface MoviePoster {
+    poster_path: string | null;
+}
+interface MovieDetail {
+    id: number;
+    title: string;
+    poster_path: string | null;
+}
 
 export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: number }) {
-    const { data, isLoading, error } = useApi(endpoint);
-    const movies = data?.results || [];
+    const { data, isLoading, error } = useApi<MovieDetail[]>(endpoint, limite);
+    const movies = Array.isArray(data) ? data : [];
     const limiteMovies = limite ? movies.slice(0, limite) : movies;
     const [showSkeleton, setShowSkeleton] = useState(true);
 
-
-    // *** USEEFFECT PARA EL SKELETON
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowSkeleton(false);
@@ -27,49 +34,58 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
         return () => clearTimeout(timer);
     }, []);
 
-
-    // *** FUNCION PARA OBTENER EL ENLACE DE LA IMAGEN
-    const getMovieImage = (movie: any) => {
-        return movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/path-to-default-image.jpg';
+    const getMovieImage = (movie: MoviePoster) => {
+        const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/default-image.jpg';
+        return imageUrl;
     };
 
+    if (isLoading || showSkeleton) {
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-center mt-5">
+                {[...Array(limite || 5)].map((_, index) => (
+                    <Skeleton key={index} className="w-full h-96" />
+                ))}
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (limiteMovies.length === 0) {
+        return <div>No hay películas disponibles.</div>;
+    }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-center mt-5">
-            {isLoading || showSkeleton ? (
-                [...Array(limite)].map((_, index) => (
-                    <Skeleton key={index} className="w-full h-72" />
-                ))
-            ) : error ? (
-                <div>Error: {error}</div>
-            ) : limiteMovies && limiteMovies.length > 0 ? (
-                <>
-                    {limiteMovies.map((movie: any) => (
-                        <div
-                            key={movie.id}
-                            className="flex flex-col rounded items-center hover:shadow-lg hover:scale-105 transition-transform cursor-pointer relative"
-                        >
-                            <img 
-                                className="bg-cover rounded-md w-full h-50 object-cover hover:scale-110 transition-transform" 
-                                src={getMovieImage(movie)} 
-                                alt={movie.title} 
-                            />
+            {limiteMovies.map((movie) => (
+                <div
+                    key={movie.id}
+                    className="flex flex-col rounded items-center hover:shadow-lg hover:scale-105 transition-transform cursor-pointer relative"
+                >
+                    <div className="relative w-full h-96">
+                        <Image
+                            className="rounded-md w-full h-full object-cover hover:scale-110 transition-transform"
+                            src={getMovieImage(movie)}
+                            alt={movie.title || 'Imagen de película'}
+                            layout="fill"
+                            objectFit="cover"
+                            priority
+                        />
+                    </div>
 
-                            {/* HOVER Y TITULO */}
-                            <div className="absolute rounded top-0 left-0 w-full h-full bg-black opacity-0 hover:opacity-90 transition-opacity duration-300 flex justify-start items-end text-white font-bold">
-                                <Link 
-                                    href={`/DetailsMovie/${movie.id}`}
-                                    className={`absolute left-4 bottom-4 text-white font-black ${ubuntu.className} text-2xl`}
-                                >
-                                    {movie.title}
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
-                </>
-            ) : (
-                null
-            )}
+                    {/* HOVER Y TITULO */}
+                    <div className="absolute rounded top-0 left-0 w-full h-full bg-black opacity-0 hover:opacity-90 transition-opacity duration-300 flex justify-start items-end text-white font-bold">
+                        <Link 
+                            href={`/DetailsMovie/${movie.id}`}
+                            className={`absolute left-4 bottom-4 text-white font-black ${ubuntu.className} text-2xl`}
+                        >
+                            {movie.title}
+                        </Link>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 }

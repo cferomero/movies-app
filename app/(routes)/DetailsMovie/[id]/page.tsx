@@ -8,17 +8,28 @@ import useApi from "@/app/hooks/useApi";
 
 // ***FONTS
 const litiaFont = Lilita_One({ subsets: ['latin'], weight: ['400'] });
-const rubikFont = Rubik({subsets: ['latin'], weight: ['700']});
-const ralewayFont = Raleway({subsets:['latin'], weight:['500']});
+const rubikFont = Rubik({ subsets: ['latin'], weight: ['700'] });
+const ralewayFont = Raleway({ subsets: ['latin'], weight: ['500'] });
 
+// *** Interface para los detalles de la película
+interface MovieDetail {
+    id: number;
+    title: string;
+    overview: string;
+    genres: { id: number; name: string }[];
+    runtime: number;
+    vote_average: number;
+    poster_path: string | null;
+    backdrop_path: string | null;
+}
 
 export default function DetailsMovie() {
     const { id } = useParams();
     const bannerRef = useRef<HTMLDivElement>(null);
-    const { data: movie, isLoading, error } = useApi(`movie/${id}`);
+    const { data: movie, isLoading, error } = useApi<MovieDetail>(`movie/${id}`);
 
     useEffect(() => {
-        if (!isLoading && !error && movie && movie.poster_path) {
+        if (!isLoading && !error && movie && movie.backdrop_path) {
             const bannerElement = bannerRef.current;
             const posterPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
             if (bannerElement) {
@@ -28,11 +39,11 @@ export default function DetailsMovie() {
                 bannerElement.style.backgroundRepeat = 'no-repeat';
             }
         }
-    }, [isLoading, error, movie])
+    }, [isLoading, error, movie]);
 
+    // Si esta cargando, si da error o si no retorna ninguna pelicula
     if (isLoading) return <div>Cargando detalles...</div>;
     if (error) return <div>Error al cargar detalles: {error}</div>;
-
     if (!movie || Object.keys(movie).length === 0) {
         return <div>No se encontraron detalles.</div>;
     }
@@ -40,6 +51,7 @@ export default function DetailsMovie() {
     return (
         <main ref={bannerRef} className="absolute top-0 left-0 right-0 bottom-0 w-full h-screen">
             <section className="w-full h-full bg-[#000000b4] flex flex-col p-10 justify-center items-start gap-6">
+                {/* Datos de la pelicula */}
                 <section className="w-[30vw] flex gap-10 justify-start items-center">
                     <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
                         <Clock strokeWidth={2} />
@@ -50,10 +62,11 @@ export default function DetailsMovie() {
                         Puntuación: {movie.vote_average}
                     </p>
                 </section>
-                {/* Mapeando los generos de cada pelicula */}
+
+                {/* Mapeo de los géneros */}
                 <section className="flex gap-4">
                     {movie.genres && movie.genres.length > 0 ? (
-                        movie.genres.map((genero: any) => (
+                        movie.genres.map((genero) => (
                             <small 
                                 key={genero.id} 
                                 className={`text-[#ecf0f1] ${rubikFont.className} tracking-wider text-sm bg-gray-600 border border-gray-600 p-2 rounded-full`}
@@ -67,9 +80,13 @@ export default function DetailsMovie() {
                         </small>
                     )}
                 </section>
+
+                {/* Título de la película */}
                 <h3 className={`text-white ${litiaFont.className} text-9xl w-[50vw]`}>
                     {movie.title}
                 </h3>
+
+                {/* Descripción de la película */}
                 <p className={`text-white w-[50vw] text-left ${ralewayFont.className} text-xl`}>
                     {movie.overview}
                 </p>
@@ -77,4 +94,3 @@ export default function DetailsMovie() {
         </main>
     );
 }
-

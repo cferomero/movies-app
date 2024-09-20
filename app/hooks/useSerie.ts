@@ -5,12 +5,25 @@ import { useState, useEffect } from "react";
 // Constantes de la API
 const API_URL = 'https://api.themoviedb.org/3';
 const API_KEY = '2ecdb96cd055bbbe260fb8a24b1ce59f';
-const IMAGE_PATH = 'https://image.tmdb.org/t/p/original/';
 
+// Interface de datos de la API
+interface TvSerie {
+    id: number;
+    name: string;
+    overview: string;
+    genres: {id: number; name: string}[];
+    number_of_seasons: number;
+    number_of_episodes: number;
+    vote_average: number;
+    poster_path: string | null;
+    backdrop_path: string | null;
+}
+// Tipo respuesta de la API
+type ApiResponse<T> = T extends TvSerie[] ? TvSerie[] : TvSerie;
 
-const useSerie = (endpoint: string, limite?: number) => {
-    const [data, setData] = useState<any>(endpoint.startsWith('tv/') ? {} : []);
-    const [isLoading, setIsLoading] = useState(false);
+function useSerie<T> (endpoint: string, limite?: number) {
+    const [data, setData] = useState<ApiResponse<T> | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
 
@@ -29,31 +42,17 @@ const useSerie = (endpoint: string, limite?: number) => {
 
                 // Aqui estoy validando si estoy
                 // seleccionando una serie especifica
-                if (endpoint.startsWith('tv/')) {
-                    setData(response.data);
+                if (response.data.results && Array.isArray(response.data.results)) {
+                    const limitedData = limite ? response.data.results.slice(0, limite) : response.data.results;
+                    setData(limitedData as ApiResponse<T>);
                 } else {
-                    const limitedSeries = limite ? response.data.results.slice(0, limite) : response.data.results;
-                    setData(
-                        limitedSeries.map((serie: any) => ({
-                            id: serie.id,
-                            name: serie.name,
-                            overview: serie.overview,
-                            genres: serie.genres,
-                            number_of_seasons: serie.number_of_seasons,
-                            number_of_episodes: serie.number_of_episodes,
-                            vote_average: serie.vote_average,
-                            poster: serie.poster_path
-                            ? `${IMAGE_PATH}${serie.poster_path}`
-                            : '/default-image.jpg',
-                            backdrop_path: serie.backdrop_path
-                            ? `${IMAGE_PATH}${serie.backdrop_path}`
-                            : '/default-image.jpg',
-                        }))
-                    );                
+                    setData(response.data as ApiResponse<T>);                
                 }
-            } catch (error: any) {
-                console.error('Error al cargar los datos: ', error);
-                setError(error.message || 'Ocurrió un error al cargar los datos');
+            } catch (error: unknown) {
+                if(error instanceof Error){
+                    console.error('Error al cargar los datos: ', error);
+                    setError(error.message || 'Ocurrió un error al cargar los datos');
+                }
             } finally {
                 setIsLoading(false);
             }
