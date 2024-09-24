@@ -96,9 +96,9 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
             {limiteMovies.map((movie) => (
                 <div
                     key={movie.id}
-                    className="flex flex-col rounded items-center hover:shadow-lg lg:hover:scale-105 transition-transform cursor-pointer relative"
+                    className="flex flex-col h-[50vh] rounded items-center hover:shadow-lg lg:hover:scale-105 transition-transform cursor-pointer relative"
                 >
-                    <div className="relative w-full h-96">
+                    <div className="relative w-full h-[50vh]">
                         {imagePaths[movie.id] && (
                             <Image
                                 className="rounded-md w-full h-full object-cover hover:scale-110 transition-transform"

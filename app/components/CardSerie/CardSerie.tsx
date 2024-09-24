@@ -72,10 +72,10 @@ export function CardSerie ({endpoint, limite}: {endpoint: string; limite?: numbe
             {limiteSeries.map((serie) => (
                 <div
                     key={serie.id}
-                    className="flex flex-col rounded shadow-md items-center hover:shadow-lg hover:scale-105 transition-transform cursor-pointer relative"
+                    className="flex flex-col h-[50vh] rounded shadow-md items-center hover:shadow-lg hover:scale-105 transition-transform cursor-pointer relative"
                 >
                     {/* Poster de la serie */}
-                    <div className="relative w-full h-96">
+                    <div className="relative w-full h-[50vh]">
                         <Image 
                             className="rounded-md w-full h-full object-cover hover:scale-110 transition-transform"
                             src={getSeriePoster(serie)}

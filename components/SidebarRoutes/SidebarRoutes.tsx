@@ -14,7 +14,7 @@ export function SidebarRoutes() {
         <div className="flex flex-col justify-between h-full">
             <div>
                 <div className="p-2 md:p-6">
-                    <p className={`${firaSans.className} text-slate-400 mb-2`}> MENÚ </p>
+                    <p className={`${firaSans.className} text-slate-900 dark:text-slate-400 mb-2`}> MENÚ </p>
                     { dataMenuSidebar.map((item) => (
                         <SidebarItems key={item.label} item={item}/>
                     ))}

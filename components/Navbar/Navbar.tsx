@@ -7,13 +7,13 @@ import { ModeToggle } from '@/components/ModeToggle/ModeToggle'
 
 export function Navbar () {
     return (
-        <nav className="flex items-center px-2 gap-x-4 md:px-6 justify-between w-full bg-background border-b h-20">
+        <nav className="flex items-center px-2 gap-x-4 md:px-6 justify-between w-full bg-background border-b h-20 dark:bg-slate-900/100">
             <div className="block xl:hidden">
                 <Sheet>
                     <SheetTrigger className='flex items-center'>
-                        <Menu />
+                        <Menu className='dark:text-white' />
                     </SheetTrigger>
-                    <SheetContent side='left'>
+                    <SheetContent className='bg-slate-100 dark:bg-slate-900' side='left'>
                         <SidebarRoutes />
                     </SheetContent>
                 </Sheet>
@@ -24,7 +24,7 @@ export function Navbar () {
             </div>
             <div className="flex gap-x-2 items-center">
                 <ModeToggle />
-                <Bell />
+                <Bell className='dark:text-white'/>
             </div>
         </nav>
     )
