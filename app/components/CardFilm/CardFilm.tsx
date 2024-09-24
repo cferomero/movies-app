@@ -65,12 +65,6 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
 
         return () => clearTimeout(timer);
     }, []);
-
-    // const getMovieImage = (movie: MoviePoster) => {
-    //     const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/default-image.jpg';
-    //     return imageUrl;
-    // };
-
     
 
     if (isLoading || showSkeleton) {

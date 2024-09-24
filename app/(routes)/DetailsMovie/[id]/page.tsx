@@ -28,18 +28,6 @@ export default function DetailsMovie() {
     const bannerRef = useRef<HTMLDivElement>(null);
     const { data: movie, isLoading, error } = useApi<MovieDetail>(`movie/${id}`);
 
-    // useEffect(() => {
-    //     if (!isLoading && !error && movie && movie.backdrop_path) {
-    //         const bannerElement = bannerRef.current;
-    //         const posterPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
-    //         if (bannerElement) {
-    //             bannerElement.style.backgroundImage = `url(${posterPath})`;
-    //             bannerElement.style.backgroundSize = 'cover';
-    //             bannerElement.style.backgroundPosition = 'center';
-    //             bannerElement.style.backgroundRepeat = 'no-repeat';
-    //         }
-    //     }
-    // }, [isLoading, error, movie]);
     useEffect(() => {
         if(!isLoading && !error && movie) {
             const bannerElement = bannerRef.current;

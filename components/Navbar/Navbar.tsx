@@ -1,6 +1,7 @@
 import { Menu, Bell, Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { UserButton } from '@clerk/nextjs';
 
 import { SidebarRoutes } from '../SidebarRoutes/SidebarRoutes'
 import { ModeToggle } from '@/components/ModeToggle/ModeToggle'
@@ -25,6 +26,7 @@ export function Navbar () {
             <div className="flex gap-x-2 items-center">
                 <ModeToggle />
                 <Bell className='dark:text-white'/>
+                <UserButton />
             </div>
         </nav>
     )
