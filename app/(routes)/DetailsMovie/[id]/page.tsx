@@ -124,7 +124,7 @@ export default function DetailsMovie() {
                 </h3>
 
                 {/* Descripción de la película */}
-                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify max-[380px]:hidden`}>
+                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify max-[480px]:hidden`}>
                     {movie.overview}
                 </p>
             </section>
