@@ -89,19 +89,19 @@ export default function DetailsMovie() {
         <main ref={bannerRef} className="absolute top-0 left-0 right-0 bottom-0 w-full h-screen">
             <section className="w-full h-full bg-[#000000b4] flex flex-col p-10 justify-center items-start gap-6">
                 {/* Datos de la pelicula */}
-                <section className="w-[30vw] sm:w-[50vw] flex gap-10 justify-start items-center">
-                    <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
+                <section className="w-[30vw] sm:w-full flex gap-10 justify-start items-center">
+                    <p className={`text-[#ecf0f1] ${rubikFont.className} max-[380px]:text-[0.5rem] text-sm flex items-center gap-1`}>
                         <Clock strokeWidth={2} />
                         {movie.runtime} minutos
                     </p>
-                    <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
+                    <p className={`text-[#ecf0f1] ${rubikFont.className} max-[380px]:text-[0.5rem] text-sm flex items-center gap-1`}>
                         <Star strokeWidth={2} />
                         Puntuación: {movie.vote_average}
                     </p>
                 </section>
 
                 {/* Mapeo de los géneros */}
-                <section className="flex gap-4">
+                <section className="flex gap-4 flex-wrap w-full">
                     {movie.genres && movie.genres.length > 0 ? (
                         movie.genres.map((genero) => (
                             <small 
@@ -119,12 +119,12 @@ export default function DetailsMovie() {
                 </section>
 
                 {/* Título de la película */}
-                <h3 className={`text-white ${litiaFont.className} text-9xl w-[50vw] sm:text-6xl sm:w-[80vw]`}>
+                <h3 className={`text-white ${litiaFont.className} text-9xl w-[50vw] sm:text-5xl sm:w-[80vw]`}>
                     {movie.title}
                 </h3>
 
                 {/* Descripción de la película */}
-                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify`}>
+                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify max-[380px]:hidden`}>
                     {movie.overview}
                 </p>
             </section>

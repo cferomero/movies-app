@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Lilita_One, Rubik, Raleway } from 'next/font/google';
-import { Play, TvMinimalPlay, Star } from "lucide-react";
+import { Play, TvMinimalPlay } from "lucide-react";
 import useSerie from "@/app/hooks/useSerie";
 
 // ***FONTS
@@ -100,20 +100,20 @@ export default function DetailsSerie() {
         <main ref={bannerRef} className="absolute top-0 left-0 right-0 bottom-0 w-full h-screen">
             <section className="w-full h-full bg-[#000000b4] flex flex-col p-10 justify-center items-start gap-6">
                 {/* Puntuacion, cantidad de temporadas y episodios de la serie */}
-                <section className="w-[30vw] sm:w-[80vw] flex gap-10 justify-start items-center">
-                    <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
+                <section className="w-[30vw] sm:w-full flex gap-10 justify-start items-center">
+                    <p className={`text-[#ecf0f1] ${rubikFont.className} max-[380px]:text-[0.5rem] text-sm flex items-center gap-1`}>
                         <Play strokeWidth={2} />
                         {/* Condicional para validar si es en plural o en singular */}
                         {serie.number_of_seasons} {serie.number_of_seasons === 1 ? 'temporada' : 'temporadas'}
                     </p>
-                    <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
+                    <p className={`text-[#ecf0f1] ${rubikFont.className} max-[380px]:text-[0.5rem] text-sm flex items-center gap-1`}>
                         <TvMinimalPlay strokeWidth={2} />
                         {serie.number_of_episodes} {serie.number_of_episodes === 1 ? 'episodio' : 'episodios'}
                     </p>
-                    <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
+                    {/* <p className={`text-[#ecf0f1] ${rubikFont.className}max-[380px]:text-[0.5rem] text-sm flex items-center gap-1`}>
                         <Star strokeWidth={2} />
                         Puntuación: {serie.vote_average}
-                    </p>
+                    </p> */}
                 </section>
 
                 {/* Aqui estoy mapeando el objeto de los generos */}
@@ -138,7 +138,7 @@ export default function DetailsSerie() {
                     {serie.name}
                 </h3>
                 {/* La descripcion de la serie */}
-                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify`}>
+                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify max-[380px]:hidden`}>
                     {serie.overview}
                 </p>
             </section>

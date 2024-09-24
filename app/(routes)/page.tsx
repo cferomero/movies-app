@@ -21,7 +21,7 @@ export default function Home() {
           endpoint="trending/movie/week?language=en-US"
         />
       </main>
-      <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
+      <div className="shadow-sm sm:w-full bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
         <h5 className={`lg:text-3xl sm:text-xs ${antonFont.className} dark:text-white`}>Top  rated movies</h5>
         <CardFilm 
           endpoint="movie/top_rated?language=en-US"

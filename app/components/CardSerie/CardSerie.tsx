@@ -86,11 +86,11 @@ export function CardSerie ({endpoint, limite}: {endpoint: string; limite?: numbe
                         />
                     </div>
                     {/* HOVER Y TITULO DE LA SERIE */}
-                    <div className="absolute rounded top-0 left-0 w-full h-full bg-black opacity-0 hover:opacity-90 transition-opacity duration-300 flex justify-start items-end text-white font-bold">
+                    <div className="absolute rounded top-0 left-0 w-full h-full bg-black opacity-80 md:bg-transparent md:opacity-0 md:hover:opacity-90 lg:bg-black lg:hover:opacity-90 transition-opacity duration-300 flex justify-start items-end text-white font-bold">
                         {/* Titulo de la serie */}
                         <Link
                             href={`/DetailsSerie/${serie.id}`}
-                            className={`absolute left-4 bottom-4 text-white font-black ${ubuntu.className} text-2xl`}
+                            className={`absolute left-4 bottom-4 text-white font-black ${ubuntu.className} text-2xl sm:text-1xl`}
                         >
                             {serie.name}
                         </Link>

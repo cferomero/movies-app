@@ -32,7 +32,7 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
 
     // Cambiar la imagen segun el tamaño del dispositivo
     const getHandleBreakpointImage = (movie: MoviePoster) => {
-        const isMoblie = window.innerWidth > 1022;
+        const isMoblie =  window.innerWidth > 1022;
         const newImagePath = isMoblie
             ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
             : `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
@@ -115,7 +115,7 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
                     <div className="absolute rounded top-0 left-0 w-full h-full bg-black opacity-80 md:bg-transparent md:opacity-0 md:hover:opacity-90 lg:bg-black lg:hover:opacity-90 transition-opacity duration-300 flex justify-start items-end text-white font-bold">
                         <Link 
                             href={`/DetailsMovie/${movie.id}`}
-                            className={`absolute left-4 bottom-4 text-white font-black ${ubuntu.className} text-2xl`}
+                            className={`absolute left-4 bottom-4 text-white font-black ${ubuntu.className} text-2xl sm:text-1xl`}
                         >
                             {movie.title}
                         </Link>
