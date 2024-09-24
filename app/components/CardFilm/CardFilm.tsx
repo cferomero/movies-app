@@ -27,36 +27,7 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
     const movies = Array.isArray(data) ? data : [];
     const limiteMovies = limite ? movies.slice(0, limite) : movies;
     const [showSkeleton, setShowSkeleton] = useState(true);
-    const [imagePaths, setImagePaths] = useState<{ [key: number]: string }>({});
 
-
-    // Cambiar la imagen segun el tamaño del dispositivo
-    const getHandleBreakpointImage = (movie: MoviePoster) => {
-        const isMoblie =  window.innerWidth > 1022;
-        const newImagePath = isMoblie
-            ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
-            : `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
-        
-        return newImagePath;
-    }
-
-    // Verificar el tamaño de la pantalla y actualice la imagen
-    useEffect(() => {
-        const updateImages = () => {
-            const updatedImagePaths = movies.reduce((acc, movie) => {
-                acc[movie.id] = getHandleBreakpointImage(movie);
-                return acc;
-            }, {} as { [key: number]: string });
-            setImagePaths(updatedImagePaths);
-        };
-        updateImages();
-        // Listener para cambios de tamaño de la ventana
-        window.addEventListener('resize', updateImages);
-        // Limpia el listener cuando el componente se desmonta
-        return () => {
-            window.removeEventListener('resize', updateImages);
-        };
-    }, [movies]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -65,8 +36,13 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
 
         return () => clearTimeout(timer);
     }, []);
-    
 
+    const getMovieImage = (movie: MoviePoster) => {
+        const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : '/default-image.jpg';
+        return imageUrl;
+    };
+
+    // Para cargar el skeleton, si hay error o si no hay elementos
     if (isLoading || showSkeleton) {
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-center mt-5">
@@ -93,16 +69,14 @@ export function CardFilm({ endpoint, limite }: { endpoint: string; limite?: numb
                     className="flex flex-col h-[50vh] rounded items-center hover:shadow-lg lg:hover:scale-105 transition-transform cursor-pointer relative"
                 >
                     <div className="relative w-full h-[50vh]">
-                        {imagePaths[movie.id] && (
-                            <Image
-                                className="rounded-md w-full h-full object-cover hover:scale-110 transition-transform"
-                                src={imagePaths[movie.id]}
-                                alt={movie.title || 'Imagen de película'}
-                                layout="fill"
-                                objectFit="cover"
-                                priority
-                            />
-                        )}
+                        <Image
+                            className="rounded-md w-full h-full object-cover hover:scale-110 transition-transform"
+                            src={getMovieImage(movie)}
+                            alt={movie.title || 'Imagen de película'}
+                            layout="fill"
+                            objectFit="cover"
+                            priority
+                        />
                     </div>
 
                     {/* HOVER Y TITULO */}
