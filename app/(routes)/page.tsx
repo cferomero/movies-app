@@ -1,8 +1,8 @@
 "use client"
 
-import { CardFilm } from "./components/CardFilm";
-import { CardSerie } from "./components/CardSerie";
-import { BannerFilms } from "./components/BannerFilms";
+import { CardFilm } from "../components/CardFilm";
+import { CardSerie } from "../components/CardSerie";
+import { BannerFilms } from "../components/BannerFilms";
 
 
 import { Anton } from "next/font/google";
@@ -14,7 +14,6 @@ const antonFont = Anton({subsets:['latin'], weight:['400']});
 
 
 export default function Home() {
-
   return (
     <div>
       <main className='w-full h-[70vh]' >
@@ -23,7 +22,7 @@ export default function Home() {
         />
       </main>
       <div className="shadow-sm bg-background hover:shadow-lg transition p-5 mt-5 bg-slate-100 rounded">
-        <h5 className={`text-3xl ${antonFont.className}`}>Top  rated movies</h5>
+        <h5 className={`lg:text-3xl sm:text-xs ${antonFont.className} dark:text-white`}>Top  rated movies</h5>
         <CardFilm 
           endpoint="movie/top_rated?language=en-US"
           limite={5}

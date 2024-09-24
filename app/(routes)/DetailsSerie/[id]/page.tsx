@@ -33,18 +33,59 @@ export default function DetailsSerie() {
 
     // Aqui estoy añadiendole las
     // propiedades de la imagen al fondo del contenedor
+    // useEffect(() => {
+    //     if(!isLoading && !error && serie && serie.backdrop_path) {
+    //         const bannerElement = bannerRef.current;
+    //         const backdropPath = `https://image.tmdb.org/t/p/original/${serie.backdrop_path}`;
+    //         if(bannerElement) {
+    //             bannerElement.style.backgroundImage = `url(${backdropPath})`;
+    //             bannerElement.style.backgroundSize = 'cover';
+    //             bannerElement.style.backgroundPosition = 'center';
+    //             bannerElement.style.backgroundRepeat = 'no-repeat';
+    //         }
+    //     }
+    // }, [isLoading, error, serie])
     useEffect(() => {
-        if(!isLoading && !error && serie && serie.backdrop_path) {
+        if (!isLoading && !error && serie) {
             const bannerElement = bannerRef.current;
-            const backdropPath = `https://image.tmdb.org/t/p/original/${serie.backdrop_path}`;
-            if(bannerElement) {
-                bannerElement.style.backgroundImage = `url(${backdropPath})`;
+    
+            // Detectar si la pantalla es menor de 768px (dispositivo móvil)
+            const isMobile = window.innerWidth < 740;
+            const imagePath = isMobile
+                ? `https://image.tmdb.org/t/p/original/${serie.poster_path}`  // Cambiar a poster en móviles
+                : `https://image.tmdb.org/t/p/original/${serie.backdrop_path}`;  // Usar el backdrop en pantallas grandes
+    
+            if (bannerElement) {
+                bannerElement.style.backgroundImage = `url(${imagePath})`;
                 bannerElement.style.backgroundSize = 'cover';
                 bannerElement.style.backgroundPosition = 'center';
                 bannerElement.style.backgroundRepeat = 'no-repeat';
+                bannerElement.style.height = '100%'; // Asegura que ocupe todo el contenedor
             }
+    
+            // Escuchar cambios de tamaño de pantalla
+            const handleResize = () => {
+                const isMobile = window.innerWidth < 740;
+                const newImagePath = isMobile
+                    ? `https://image.tmdb.org/t/p/original/${serie.poster_path}`
+                    : `https://image.tmdb.org/t/p/original/${serie.backdrop_path}`;
+                if (bannerElement) {
+                    bannerElement.style.backgroundImage = `url(${newImagePath})`;
+                }
+            };
+    
+            // Añadir un event listener para detectar cuando cambie el tamaño de la pantalla
+            window.addEventListener('resize', handleResize);
+    
+            // Limpiar el event listener al desmontar el componente
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
         }
-    }, [isLoading, error, serie])
+    }, [isLoading, error, serie]);
+    
+
+
 
     
     // Si esta cargando, si da error o si no retorna ninguna pelicula
@@ -59,7 +100,7 @@ export default function DetailsSerie() {
         <main ref={bannerRef} className="absolute top-0 left-0 right-0 bottom-0 w-full h-screen">
             <section className="w-full h-full bg-[#000000b4] flex flex-col p-10 justify-center items-start gap-6">
                 {/* Puntuacion, cantidad de temporadas y episodios de la serie */}
-                <section className="w-[30vw] flex gap-10 justify-start items-center">
+                <section className="w-[30vw] sm:w-[80vw] flex gap-10 justify-start items-center">
                     <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
                         <Play strokeWidth={2} />
                         {/* Condicional para validar si es en plural o en singular */}
@@ -93,11 +134,11 @@ export default function DetailsSerie() {
                     )}
                 </section>
                 {/* Titulo de la serie */}
-                <h3 className={`text-white ${litiaFont.className} text-9xl w-[50vw]`}>
+                <h3 className={`text-white ${litiaFont.className} text-9xl w-[50vw] sm:text-6xl sm:w-[80vw]`}>
                     {serie.name}
                 </h3>
                 {/* La descripcion de la serie */}
-                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} text-xl`}>
+                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify`}>
                     {serie.overview}
                 </p>
             </section>

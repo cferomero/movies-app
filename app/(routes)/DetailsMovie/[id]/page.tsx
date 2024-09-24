@@ -28,16 +28,53 @@ export default function DetailsMovie() {
     const bannerRef = useRef<HTMLDivElement>(null);
     const { data: movie, isLoading, error } = useApi<MovieDetail>(`movie/${id}`);
 
+    // useEffect(() => {
+    //     if (!isLoading && !error && movie && movie.backdrop_path) {
+    //         const bannerElement = bannerRef.current;
+    //         const posterPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
+    //         if (bannerElement) {
+    //             bannerElement.style.backgroundImage = `url(${posterPath})`;
+    //             bannerElement.style.backgroundSize = 'cover';
+    //             bannerElement.style.backgroundPosition = 'center';
+    //             bannerElement.style.backgroundRepeat = 'no-repeat';
+    //         }
+    //     }
+    // }, [isLoading, error, movie]);
     useEffect(() => {
-        if (!isLoading && !error && movie && movie.backdrop_path) {
+        if(!isLoading && !error && movie) {
             const bannerElement = bannerRef.current;
-            const posterPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
-            if (bannerElement) {
-                bannerElement.style.backgroundImage = `url(${posterPath})`;
+            // Detectar el talaño del dispositivo
+            const isMoblie = window.innerWidth < 740;
+            const imagenPath = isMoblie
+                ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                : `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
+            
+            if(bannerElement) {
+                bannerElement.style.backgroundImage = `url(${imagenPath})`;
                 bannerElement.style.backgroundSize = 'cover';
                 bannerElement.style.backgroundPosition = 'center';
                 bannerElement.style.backgroundRepeat = 'no-repeat';
+                bannerElement.style.height = '100%';
             }
+
+            // evento para realizar los cambios en pantalla
+            const handleResize = () => {
+                const isMobile = window.innerWidth < 740;
+                const newImagePath = isMobile
+                    ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                    : `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
+
+                if(bannerElement) {
+                    bannerElement.style.backgroundImage = `url(${newImagePath})`;
+                }
+            };
+
+            // Nuevo Event listener par detectar el cambio
+            window.addEventListener('resize', handleResize);
+            // remover el evento al salir del componente
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
         }
     }, [isLoading, error, movie]);
 
@@ -52,7 +89,7 @@ export default function DetailsMovie() {
         <main ref={bannerRef} className="absolute top-0 left-0 right-0 bottom-0 w-full h-screen">
             <section className="w-full h-full bg-[#000000b4] flex flex-col p-10 justify-center items-start gap-6">
                 {/* Datos de la pelicula */}
-                <section className="w-[30vw] flex gap-10 justify-start items-center">
+                <section className="w-[30vw] sm:w-[50vw] flex gap-10 justify-start items-center">
                     <p className={`text-[#ecf0f1] ${rubikFont.className} text-sm flex items-center gap-1`}>
                         <Clock strokeWidth={2} />
                         {movie.runtime} minutos
@@ -82,12 +119,12 @@ export default function DetailsMovie() {
                 </section>
 
                 {/* Título de la película */}
-                <h3 className={`text-white ${litiaFont.className} text-9xl w-[50vw]`}>
+                <h3 className={`text-white ${litiaFont.className} text-9xl w-[50vw] sm:text-6xl sm:w-[80vw]`}>
                     {movie.title}
                 </h3>
 
                 {/* Descripción de la película */}
-                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} text-xl`}>
+                <p className={`text-white w-[50vw] text-left ${ralewayFont.className} lg:text-xl sm:text-sm sm:text-justify`}>
                     {movie.overview}
                 </p>
             </section>

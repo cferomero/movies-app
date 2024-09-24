@@ -23,7 +23,7 @@ export function SidebarItems(props: SidebarItemsProps) {
             href={href}
             className={cn(`flex gap-x-2 mt-2 light:text-slate-700 dark:text-white text-sm items-center hover:bg-slate-300/70 p-2 rounded-lg cursor-pointer`, activePath && 'bg-slate-400/50')}
         >
-            <Icon className="h-5 w-5 text-black" strokeWidth={2} />
+            <Icon className="h-5 w-5" strokeWidth={2} />
             <p className={`${firaSans.className} text-base`}> {label} </p>
         </Link>
     )

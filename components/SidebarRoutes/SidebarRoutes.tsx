@@ -1,6 +1,6 @@
 "use client"
 
-import { SidebarItems } from "../SidebarItems"
+import { SidebarItems } from "@/components/SidebarItems"
 import { dataMenuSidebar, dataLibrarySidebar, dataSupportSidebar } from './SidebarRoutes.data'
 
 import { Separator } from "@/components/ui/separator"
@@ -33,7 +33,7 @@ export function SidebarRoutes() {
                         <SidebarItems key={item.label} item={item}/>
                     ))}
                 </div>
-                <Separator />
+                {/* <Separator /> */}
                 {/* <footer className="mt-3 p-3 text-center">
                     2024. All rights reserved
                 </footer> */}

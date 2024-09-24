@@ -68,7 +68,7 @@ export function CardSerie ({endpoint, limite}: {endpoint: string; limite?: numbe
     
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-center mt-5">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-center mt-5">
             {limiteSeries.map((serie) => (
                 <div
                     key={serie.id}
