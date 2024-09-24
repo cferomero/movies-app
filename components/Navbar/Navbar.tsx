@@ -18,7 +18,7 @@ export function Navbar () {
                     </SheetContent>
                 </Sheet>
             </div>
-            <div className="relative w-[300px]">
+            <div className="relative justify-self-start w-[300px]">
                 <Input placeholder='Buscar...' className='rounded-lg' />
                 <Search strokeWidth={1} className='absolute top-2 right-2' />
             </div>

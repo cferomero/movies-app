@@ -77,7 +77,7 @@ export function BannerFilms({ endpoint }: { endpoint: string }) {
         {currentId && (
           <Link
             href={`/DetailsMovie/${currentId}`}
-            className={`text-left ${litiaFont.className} font-black text-7xl w-[50rem]`}
+            className={`text-left ${litiaFont.className} font-black min-[380px]:text-7xl w-[50rem]`}
           >
             {currentTitle}
           </Link>
